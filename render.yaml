@@ -26,11 +26,10 @@ services:
       - key: SECRET_KEY
         generateValue: true
 
-  # React 프론트엔드 (정적 사이트)
+  # React 프론트엔드 (정적 사이트) - plan 없음 (정적 사이트는 기본 무료)
   - type: web
     name: mindmbti-web
     runtime: static
-    plan: free
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
