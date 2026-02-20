@@ -1,7 +1,10 @@
-// 프로덕션: VITE_API_URL (전체 URL 또는 host만)
+// 프로덕션: VITE_API_URL 또는 Render 배포 기본값
 // 로컬: /api (Vite 프록시)
 const raw = import.meta.env.VITE_API_URL
-const API = !raw ? '/api' : (raw.startsWith('http') ? raw : `https://${raw}`)
+const defaultProd = 'https://mindmbti-api.onrender.com'
+const API = !raw
+  ? (import.meta.env.PROD ? defaultProd : '/api')
+  : (raw.startsWith('http') ? raw : `https://${raw}`)
 
 function authHeaders() {
   const token = localStorage.getItem('token')
