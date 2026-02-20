@@ -40,6 +40,23 @@ Blueprint 생성 시 다음 항목을 **직접 입력**해야 합니다:
 
 ---
 
+## API 연결 안 될 때 (모든 기능/로딩 실패)
+
+**증상**: MBTI 검사, 로그인 등 모든 기능이 동작하지 않거나 매우 느림
+
+**원인**: 프론트엔드가 잘못된 백엔드 URL로 호출 중
+
+**해결**:
+
+1. **Render Dashboard** → **Resources** → **mindmbti-api** 클릭
+2. 상단 **URL** 확인 (예: `https://mindmbti-api-xyz12.onrender.com`)
+3. **mindmbti-web** 서비스 클릭 → **Environment** 탭
+4. **VITE_API_URL** 환경 변수 확인
+   - 실제 mindmbti-api URL과 다르면 → 값 수정 후 **Save Changes**
+5. **Manual Deploy** → **Deploy latest commit** (프론트엔드 재빌드)
+
+---
+
 ## 방법 2: 수동 배포 (항목별 생성)
 
 ### 1. PostgreSQL 데이터베이스

@@ -34,6 +34,6 @@ services:
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
     envVars:
-      # 백엔드 URL (기본: mindmbti-api 서비스 URL, 필요 시 Dashboard에서 수정)
+      # 백엔드 URL - Render가 다르게 할당했으면 Dashboard에서 mindmbti-api URL 확인 후 수정
       - key: VITE_API_URL
         value: https://mindmbti-api.onrender.com
