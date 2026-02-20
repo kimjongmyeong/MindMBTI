@@ -1,0 +1,58 @@
+"""
+MBTI 설문 48문항 (4지표 x 12문항)
+각 문항: id, dimension, text, positive_pole (높은 점수(4,5)가 이 극을 지지)
+"""
+MBTI_QUESTIONS = [
+    # E/I (1-12)
+    {"id": 1, "dimension": "E/I", "text": "파티나 모임에서 적극적으로 대화에 참여한다", "positive_pole": "E"},
+    {"id": 2, "dimension": "E/I", "text": "혼자 있을 때 에너지가 충전된다", "positive_pole": "I"},
+    {"id": 3, "dimension": "E/I", "text": "새로운 사람들을 만나는 것을 즐긴다", "positive_pole": "E"},
+    {"id": 4, "dimension": "E/I", "text": "깊이 있는 대화보다 가벼운 수다를 선호한다", "positive_pole": "I"},
+    {"id": 5, "dimension": "E/I", "text": "많은 사람들과 함께 있을 때 활기가 난다", "positive_pole": "E"},
+    {"id": 6, "dimension": "E/I", "text": "생각을 정리할 때 말보다 글로 쓰는 편이 편하다", "positive_pole": "I"},
+    {"id": 7, "dimension": "E/I", "text": "사회적 상황에서 먼저 다가가는 편이다", "positive_pole": "E"},
+    {"id": 8, "dimension": "E/I", "text": "혼자 하는 활동에 더 집중할 수 있다", "positive_pole": "I"},
+    {"id": 9, "dimension": "E/I", "text": "친구들과 자주 연락하고 만나려 한다", "positive_pole": "E"},
+    {"id": 10, "dimension": "E/I", "text": "내향적이라 할 수 있는 시간이 필요하다", "positive_pole": "I"},
+    {"id": 11, "dimension": "E/I", "text": "그룹 활동에서 리더 역할을 맡는 편이다", "positive_pole": "E"},
+    {"id": 12, "dimension": "E/I", "text": "말하기 전에 생각하는 시간이 필요하다", "positive_pole": "I"},
+    # S/N (13-24)
+    {"id": 13, "dimension": "S/N", "text": "구체적인 사실과 세부사항에 주목한다", "positive_pole": "S"},
+    {"id": 14, "dimension": "S/N", "text": "새로운 아이디어나 가능성에 끌린다", "positive_pole": "N"},
+    {"id": 15, "dimension": "S/N", "text": "경험과 실제 데이터를 중시한다", "positive_pole": "S"},
+    {"id": 16, "dimension": "S/N", "text": "미래를 상상하고 비전을 그린다", "positive_pole": "N"},
+    {"id": 17, "dimension": "S/N", "text": "단계별로 차근차근 진행하는 것을 선호한다", "positive_pole": "S"},
+    {"id": 18, "dimension": "S/N", "text": "큰 그림을 먼저 보려 한다", "positive_pole": "N"},
+    {"id": 19, "dimension": "S/N", "text": "현실적이고 실용적인 접근을 한다", "positive_pole": "S"},
+    {"id": 20, "dimension": "S/N", "text": "상징과 은유를 잘 이해한다", "positive_pole": "N"},
+    {"id": 21, "dimension": "S/N", "text": "검증된 방법을 따르는 것이 안전하다고 생각한다", "positive_pole": "S"},
+    {"id": 22, "dimension": "S/N", "text": "새로운 방식으로 문제를 해결하고 싶어 한다", "positive_pole": "N"},
+    {"id": 23, "dimension": "S/N", "text": "오감으로 경험하는 것을 중요하게 여긴다", "positive_pole": "S"},
+    {"id": 24, "dimension": "S/N", "text": "패턴과 연결고리를 찾는 것을 즐긴다", "positive_pole": "N"},
+    # T/F (25-36)
+    {"id": 25, "dimension": "T/F", "text": "논리적 분석을 중요하게 여긴다", "positive_pole": "T"},
+    {"id": 26, "dimension": "T/F", "text": "다른 사람의 감정을 깊이 고려한다", "positive_pole": "F"},
+    {"id": 27, "dimension": "T/F", "text": "객관적 기준으로 결정하는 편이다", "positive_pole": "T"},
+    {"id": 28, "dimension": "T/F", "text": "조화와 협력을 우선시한다", "positive_pole": "F"},
+    {"id": 29, "dimension": "T/F", "text": "진실이 감정보다 중요하다고 생각한다", "positive_pole": "T"},
+    {"id": 30, "dimension": "T/F", "text": "공감능력이 뛰어나다고 주변에서 말한다", "positive_pole": "F"},
+    {"id": 31, "dimension": "T/F", "text": "원인과 결과를 분석하는 것을 좋아한다", "positive_pole": "T"},
+    {"id": 32, "dimension": "T/F", "text": "사람들의 감정에 영향을 받기 쉽다", "positive_pole": "F"},
+    {"id": 33, "dimension": "T/F", "text": "비판과 피드백을 당연히 받아들인다", "positive_pole": "T"},
+    {"id": 34, "dimension": "T/F", "text": "갈등 시 모두가 만족하는 해결을 찾으려 한다", "positive_pole": "F"},
+    {"id": 35, "dimension": "T/F", "text": "감정보다 논리로 판단하는 편이다", "positive_pole": "T"},
+    {"id": 36, "dimension": "T/F", "text": "가치와 의미를 중요하게 생각한다", "positive_pole": "F"},
+    # J/P (37-48)
+    {"id": 37, "dimension": "J/P", "text": "계획을 세우고 그대로 실행하는 편이다", "positive_pole": "J"},
+    {"id": 38, "dimension": "J/P", "text": "일정에 구애받지 않고 유연하게 행동한다", "positive_pole": "P"},
+    {"id": 39, "dimension": "J/P", "text": "할 일 목록을 꼼꼼히 관리한다", "positive_pole": "J"},
+    {"id": 40, "dimension": "J/P", "text": "즉흥적으로 결정하는 경우가 많다", "positive_pole": "P"},
+    {"id": 41, "dimension": "J/P", "text": "마감일 전에 미리 끝내려 노력한다", "positive_pole": "J"},
+    {"id": 42, "dimension": "J/P", "text": "여러 옵션을 열어두는 것을 선호한다", "positive_pole": "P"},
+    {"id": 43, "dimension": "J/P", "text": "명확한 기준과 규칙이 있으면 편하다", "positive_pole": "J"},
+    {"id": 44, "dimension": "J/P", "text": "상황에 맞게 기다렸다가 결정한다", "positive_pole": "P"},
+    {"id": 45, "dimension": "J/P", "text": "정리정돈된 환경에서 일하는 것을 좋아한다", "positive_pole": "J"},
+    {"id": 46, "dimension": "J/P", "text": "새로운 기회가 생기면 계획을 바꾸기 쉽다", "positive_pole": "P"},
+    {"id": 47, "dimension": "J/P", "text": "결론을 내리는 것을 중요하게 여긴다", "positive_pole": "J"},
+    {"id": 48, "dimension": "J/P", "text": "과정을 탐색하는 것을 즐긴다", "positive_pole": "P"},
+]

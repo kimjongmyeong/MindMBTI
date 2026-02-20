@@ -1,0 +1,41 @@
+# MindMBTI Render Blueprint
+# https://render.com/docs/blueprint-spec
+
+databases:
+  - name: mindmbti-db
+    databaseName: mindmbti
+    plan: free
+
+services:
+  # FastAPI 백엔드
+  - type: web
+    name: mindmbti-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    preDeployCommand: python -m alembic upgrade head
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mindmbti-db
+          property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+
+  # React 프론트엔드 (정적 사이트)
+  - type: web
+    name: mindmbti-web
+    runtime: static
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      # 백엔드 URL (기본: mindmbti-api 서비스 URL, 필요 시 Dashboard에서 수정)
+      - key: VITE_API_URL
+        value: https://mindmbti-api.onrender.com
