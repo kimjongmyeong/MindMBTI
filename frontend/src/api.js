@@ -24,7 +24,9 @@ export async function register(email, password, nickname) {
   })
   if (!r.ok) {
     const d = await r.json().catch(() => ({}))
-    throw new Error(d.detail || '회원가입 실패')
+    const detail = d.detail
+    const msg = Array.isArray(detail) ? detail[0]?.msg : (typeof detail === 'string' ? detail : '회원가입 실패')
+    throw new Error(msg || '회원가입 실패')
   }
   return r.json()
 }
@@ -37,7 +39,9 @@ export async function login(email, password) {
   })
   if (!r.ok) {
     const d = await r.json().catch(() => ({}))
-    throw new Error(d.detail || '로그인 실패')
+    const detail = d.detail
+    const msg = Array.isArray(detail) ? detail[0]?.msg : (typeof detail === 'string' ? detail : '로그인 실패')
+    throw new Error(msg || '로그인 실패')
   }
   return r.json()
 }

@@ -7,16 +7,21 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [nickname, setNickname] = useState('')
   const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    setSubmitting(true)
     try {
       await register(email, password, nickname)
       navigate('/login')
     } catch (err) {
-      setError(err.message)
+      const msg = err.message || '회원가입 실패'
+      setError(msg.includes('fetch') || msg.includes('Network') ? '서버 연결 실패. 무료 서버는 15분 비활성 시 Sleep 됩니다. 1분 후 다시 시도해 주세요.' : msg)
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -46,7 +51,9 @@ export default function Register() {
           onChange={(e) => setNickname(e.target.value)}
           required
         />
-        <button type="submit">가입하기</button>
+        <button type="submit" disabled={submitting}>
+          {submitting ? '가입 중...' : '가입하기'}
+        </button>
       </form>
       <p><Link to="/login">로그인</Link></p>
     </div>
