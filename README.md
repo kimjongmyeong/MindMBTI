@@ -170,14 +170,13 @@ python -m alembic downgrade -1                       # 롤백
 
 ---
 
-## Render 배포 (무료)
+## 배포
 
-```powershell
-# GitHub에 push 후 Render Dashboard에서 Blueprint 연결
-# 또는 DEPLOY.md 참고
-```
-
+### Render (무료, Sleep 있음)
 자세한 절차는 [DEPLOY.md](DEPLOY.md) 참고.
+
+### Railway (무료 크레딧 $5/월, Sleep 없음)
+자세한 절차는 [DEPLOY_RAILWAY.md](DEPLOY_RAILWAY.md) 참고.
 
 ---
 
