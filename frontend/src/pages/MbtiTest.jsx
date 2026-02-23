@@ -8,10 +8,26 @@ export default function MbtiTest() {
   const [current, setCurrent] = useState(0)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
+  const [loadError, setLoadError] = useState(null)
+  const [slowHint, setSlowHint] = useState(false)
   const navigate = useNavigate()
 
+  const fetchQuestions = () => {
+    setLoading(true)
+    setLoadError(null)
+    setSlowHint(false)
+    const timer = setTimeout(() => setSlowHint(true), 15000)
+    getQuestions()
+      .then(setQuestions)
+      .catch((e) => setLoadError(e.message || '문항을 불러올 수 없습니다'))
+      .finally(() => {
+        clearTimeout(timer)
+        setLoading(false)
+      })
+  }
+
   useEffect(() => {
-    getQuestions().then(setQuestions).catch(console.error).finally(() => setLoading(false))
+    fetchQuestions()
   }, [])
 
   const handleAnswer = (qid, value) => {
@@ -41,8 +57,31 @@ export default function MbtiTest() {
     }
   }
 
-  if (loading) return <div className="page"><p>로딩 중...</p></div>
-  if (!questions.length) return <div className="page"><p>문항을 불러올 수 없습니다.</p></div>
+  if (loading) {
+    return (
+      <div className="page">
+        <p>로딩 중...</p>
+        {slowHint && (
+          <p className="slow-hint">
+            서버가 준비 중일 수 있습니다. (무료 서버는 15분 비활성 시 Sleep 됩니다)
+            <br />1분 정도 기다려 보시거나, 아래 버튼으로 다시 시도해 주세요.
+          </p>
+        )}
+        {slowHint && <button onClick={fetchQuestions}>다시 시도</button>}
+      </div>
+    )
+  }
+  if (loadError || !questions.length) {
+    return (
+      <div className="page">
+        <p className="error">{loadError || '문항을 불러올 수 없습니다.'}</p>
+        <p className="slow-hint">
+          무료 서버는 15분 비활성 시 Sleep 됩니다. 1분 정도 기다린 뒤 다시 시도해 주세요.
+        </p>
+        <button onClick={fetchQuestions}>다시 시도</button>
+      </div>
+    )
+  }
 
   const q = questions[current]
   const progress = ((current + 1) / questions.length) * 100
