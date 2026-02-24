@@ -3,6 +3,9 @@ DB 연결 및 세션 관리
 DATABASE_URL 미설정 시 SQLite 사용 (로컬/테스트)
 """
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.pool import StaticPool
@@ -14,6 +17,8 @@ DATABASE_URL = _url.replace("postgres://", "postgresql://", 1) if _url.startswit
 connect_args = {}
 if DATABASE_URL.startswith("sqlite"):
     connect_args = {"check_same_thread": False}
+elif "postgresql" in DATABASE_URL:
+    connect_args = {"connect_timeout": 15}  # PostgreSQL 연결 15초 제한
 
 engine = create_engine(
     DATABASE_URL,
@@ -34,4 +39,8 @@ def get_db():
 
 def init_db():
     from models import User, MbtiSession, Share, UserResult
-    Base.metadata.create_all(bind=engine)
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        logger.exception("DB init failed: %s", e)
+        raise
