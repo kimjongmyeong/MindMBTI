@@ -54,7 +54,7 @@ Railway는 Sleep 없이 무료 크레딧($5/월)으로 배포합니다.
 1. **+ New** → **GitHub Repo** → 같은 저장소(MindMBTI) 선택
 2. 새로 생긴 서비스 클릭 → **Settings**
 3. **Source** 섹션:
-   - **Root Directory**: `frontend`
+   - **Root Directory**: `frontend` ← **필수!** 미설정 시 백엔드가 빌드되어 `{"detail":"Not Found"}` 발생
    - **Config file path** (선택): `frontend/railway.json`
 4. **Variables** 섹션:
    - **VITE_API_URL**: `https://[3단계에서 메모한 백엔드 URL]/api` ← 끝에 `/api` **필수**
