@@ -83,7 +83,7 @@ Railway는 Sleep 없이 무료 크레딧($5/월)으로 배포합니다.
 | 증상 | 해결 |
 |------|------|
 | `pip: not found` / Build 실패 | 1) Root Directory가 `backend`인지 확인<br>2) Variables에 `RAILWAY_DOCKERFILE_PATH=Dockerfile` 추가<br>3) Settings → Build에서 Builder를 `Dockerfile`로 지정 |
-| **Healthcheck failure** | 1) `railway.json`에 `healthcheckTimeout: 600` 반영 후 재배포<br>2) Variables에 `RAILWAY_HEALTHCHECK_TIMEOUT_SEC=600` 추가 (대안)<br>3) **DATABASE_URL** 연결 확인 (미연결 시 앱 시작 실패)<br>4) Deployments → View logs에서 앱 시작 오류 확인 |
+| **Healthcheck failure** | 1) `railway.json`에 `"healthcheckPath": null`로 비활성화<br>2) **또는** Railway 대시보드 → mindmbti-api → **Settings** → **Deploy** 섹션에서 Health check path **삭제**<br>3) DATABASE_URL 연결 확인<br>4) 배포 성공 후 수동으로 `https://[도메인]/api/health` 접속 테스트 |
 | 프론트에서 API 호출 실패 | VITE_API_URL이 `https://[백엔드-도메인]/api` 형식인지 확인 (끝에 `/api` 필수) |
 | DB 연결 오류 | 백엔드 Variables에 DATABASE_URL이 PostgreSQL에서 **변수 참조**로 연결되어 있는지 확인 |
 | 빌드 실패 | 해당 서비스 Logs 탭에서 에러 메시지 확인 |

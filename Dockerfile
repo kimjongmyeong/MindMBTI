@@ -9,7 +9,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY backend/ .
 RUN mkdir -p /app/data
-RUN chmod +x entrypoint.sh
 
 EXPOSE 8080
-ENTRYPOINT ["./entrypoint.sh"]
+# 직접 uvicorn 실행 (entrypoint 우회 - healthcheck 디버깅)
+# Railway PORT는 런타임에 주입됨
+CMD sh -c 'uvicorn minimal_app:app --host 0.0.0.0 --port ${PORT:-8080}'
