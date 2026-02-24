@@ -1,5 +1,6 @@
 # 백엔드 빌드 (Root Directory 미설정 시 repo root에서 사용)
 FROM python:3.10-slim
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 

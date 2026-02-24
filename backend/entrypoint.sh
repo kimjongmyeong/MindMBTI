@@ -1,8 +1,12 @@
 #!/bin/sh
 set -e
 cd /app
-# alembic: 실패해도 uvicorn 실행 (DB connect_timeout 15초로 블로킹 방지)
+# 1단계: 최소 앱으로 배포 성공 확인 (DB 없음)
+# 2단계: 성공하면 USE_MAIN_APP=1로 main 앱 복귀
+if [ "$USE_MAIN_APP" != "1" ]; then
+  echo "Starting minimal_app on port ${PORT:-8080}"
+  exec uvicorn minimal_app:app --host 0.0.0.0 --port "${PORT:-8080}"
+fi
 python -m alembic upgrade head 2>&1 || true
-echo "Starting uvicorn on port ${PORT:-8001}"
-# Railway는 PORT를 주입 (기본 8080)
+echo "Starting main:app on port ${PORT:-8080}"
 exec uvicorn main:app --host 0.0.0.0 --port "${PORT:-8080}"
