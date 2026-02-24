@@ -34,7 +34,8 @@ Railway는 Sleep 없이 무료 크레딧($5/월)으로 배포합니다.
 1. **+ New** → **GitHub Repo** → 같은 저장소(MindMBTI) 선택
 2. 새로 생긴 서비스 클릭 → **Settings**
 3. **Source** 섹션:
-   - **Root Directory**: `backend` ← **필수!** (미설정 시 `pip: not found` 발생)
+   - **Root Directory**: `backend` 또는 **비워두기** (repo root `Dockerfile` 사용)
+   - 비워두면 `mindmbti/Dockerfile`이 자동 사용됨. `backend`로 하면 `backend/Dockerfile` 사용
    - **Config file path**: `backend/railway.json` (저장소 루트 기준 경로)
 4. **Build** 섹션 (있을 경우):
    - **Builder**: `Dockerfile` 로 설정
