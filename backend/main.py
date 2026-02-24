@@ -27,7 +27,11 @@ from models import User, MbtiSession, Share, UserResult
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    init_db()
+    try:
+        init_db()
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).exception("DB init failed (app will start anyway): %s", e)
     yield
     pass
 
