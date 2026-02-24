@@ -34,12 +34,15 @@ Railway는 Sleep 없이 무료 크레딧($5/월)으로 배포합니다.
 1. **+ New** → **GitHub Repo** → 같은 저장소(MindMBTI) 선택
 2. 새로 생긴 서비스 클릭 → **Settings**
 3. **Source** 섹션:
-   - **Root Directory**: `backend`
-   - **Config file path** (선택): `backend/railway.json`
-4. **Variables** 섹션:
+   - **Root Directory**: `backend` ← **필수!** (미설정 시 `pip: not found` 발생)
+   - **Config file path**: `backend/railway.json` (저장소 루트 기준 경로)
+4. **Build** 섹션 (있을 경우):
+   - **Builder**: `Dockerfile` 로 설정
+5. **Variables** 섹션:
    - **DATABASE_URL**: PostgreSQL 서비스의 Variables에서 **Add variable reference** → `DATABASE_URL` 연결
    - **OPENAI_API_KEY**: (선택) `sk-...`
    - **SECRET_KEY**: 아무 긴 문자열 (예: `railway-mindmbti-secret-xxx`)
+   - **RAILWAY_DOCKERFILE_PATH**: `Dockerfile` ← pip 오류 시 Dockerfile 강제 사용
 5. **Networking** → **Generate Domain** → URL 확인 (예: `mindmbti-api-production.up.railway.app`)
 6. **이 URL을 메모해 두세요** (프론트엔드 설정에 사용)
 
@@ -53,8 +56,8 @@ Railway는 Sleep 없이 무료 크레딧($5/월)으로 배포합니다.
    - **Root Directory**: `frontend`
    - **Config file path** (선택): `frontend/railway.json`
 4. **Variables** 섹션:
-   - **VITE_API_URL**: `https://[3단계에서 메모한 백엔드 URL]`
-     - 예: `https://mindmbti-api-production.up.railway.app`
+   - **VITE_API_URL**: `https://[3단계에서 메모한 백엔드 URL]/api` ← 끝에 `/api` **필수**
+     - 예: `https://mindmbti-api-production.up.railway.app/api`
 5. **Networking** → **Generate Domain** → 프론트엔드 URL 확인
 
 ---
@@ -78,6 +81,8 @@ Railway는 Sleep 없이 무료 크레딧($5/월)으로 배포합니다.
 
 | 증상 | 해결 |
 |------|------|
-| 프론트에서 API 호출 실패 | VITE_API_URL이 백엔드 URL과 정확히 일치하는지 확인 |
-| DB 연결 오류 | 백엔드 Variables에 DATABASE_URL이 연결되어 있는지 확인 |
+| `pip: not found` / Build 실패 | 1) Root Directory가 `backend`인지 확인<br>2) Variables에 `RAILWAY_DOCKERFILE_PATH=Dockerfile` 추가<br>3) Settings → Build에서 Builder를 `Dockerfile`로 지정 |
+| **Healthcheck failure** | 1) `railway.json`에 `healthcheckTimeout: 600` 반영 후 재배포<br>2) Variables에 `RAILWAY_HEALTHCHECK_TIMEOUT_SEC=600` 추가 (대안)<br>3) **DATABASE_URL** 연결 확인 (미연결 시 앱 시작 실패)<br>4) Deployments → View logs에서 앱 시작 오류 확인 |
+| 프론트에서 API 호출 실패 | VITE_API_URL이 `https://[백엔드-도메인]/api` 형식인지 확인 (끝에 `/api` 필수) |
+| DB 연결 오류 | 백엔드 Variables에 DATABASE_URL이 PostgreSQL에서 **변수 참조**로 연결되어 있는지 확인 |
 | 빌드 실패 | 해당 서비스 Logs 탭에서 에러 메시지 확인 |
